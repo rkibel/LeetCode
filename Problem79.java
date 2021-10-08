@@ -1,45 +1,33 @@
 class Problem79 {
-    static boolean found = false;
-    static int loc = 0;
-    public boolean exist(char[][] board, String word) {
-        if (word.equals("")) // final condition
-            found = true;
-        else if (loc == 0){ //first condition
-            loc++;
-            for (int i = 0; i < board.length; i++){
-                for(int j = 0; j < board.length; j++){
-                    if (board[i][j] == word.charAt(0)){
-                        board[i][j] = '0';
-                        found = found || exist(board, word.substring(1));
-                    }
-                }
+    public boolean exist(char[][] board, String word){
+        int m = board.length, n = board[0].length;
+
+        if (m == 0 || n == 0 || word.length() == 0) 
+            return false; 
+        for (int i = 0; i < m; i++){
+            for(int j = 0; j < n; j++){
+                if (board[i][j] == word.charAt(0) && DFS(board, word, i, j, 0, new boolean[m][n]))
+                    return true;
             }
         }
-        else{
-            for (int i = 0; i < board.length; i++){
-                for (int j = 0; j < board[i].length; j++){
-                    if (board[i][j] == '0'){
-                        board[i][j] = '1';
-                        if (i != board.length-1 && (board[i+1][j] != '0' && board[i+1][j] != '1')){
-                            board[i+1][j] = '0';
-                            found = found || exist(board, word.substring(1));
-                        }
-                        if (i != 0 && (board[i-1][j] != '0' && board[i-1][j] != '1')){
-                            board[i-1][j] = '0';
-                            found = found || exist(board, word.substring(1));
-                        }
-                        if (j != board.length-1 && (board[i][j+1] != '0' && board[i][j+1] != '1')){
-                            board[i][j+1] = '0';
-                            found = found || exist(board, word.substring(1));
-                        }
-                        if (j != 0 && (board[i][j-1] != '0' && board[i][j-1] != '1')){
-                            board[i][j-1] = '0';
-                            found = found || exist(board, word.substring(1));
-                        }
-                    }
-                }
-            }
-        }
-        return found;
+        return false;
+    }
+    
+    public boolean DFS (char [][] board,String word, int i, int j, int wordIndex, boolean [][] looked){
+        int m = board.length, n = board[0].length;
+        if (wordIndex == word.length()) 
+            return true; 
+        
+        if (i < 0 || j < 0 || i >= m || j >= n || word.charAt(wordIndex) != board[i][j] || looked[i][j]) 
+            return false;
+            
+        looked[i][j] = true;
+        if (DFS(board, word, i-1, j, wordIndex+1, looked) || 
+            DFS(board, word, i+1, j, wordIndex+1, looked) || 
+            DFS(board, word, i, j-1, wordIndex+1, looked) ||
+            DFS(board, word, i, j+1, wordIndex+1, looked))
+            return true;
+        looked[i][j] = false;
+        return false;
     }
 }
