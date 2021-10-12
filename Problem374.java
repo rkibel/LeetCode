@@ -8,26 +8,19 @@
  */
 
 public class Problem374 extends GuessGame {
-    int marker = 0;
-    int upper;
-    int lower = 1;
-    int g;
     public int guessNumber(int n) {
-        if (marker == 0){
-            marker++;
-            upper = n;
-            g = n;
+        int high = n;
+        int low = 1;
+        while (low <= high){
+            int mid = low + (high - low) / 2;
+            int res = GuessGame.guess(mid);
+            if (res == 0)
+                return mid;
+            else if (res == 1)
+                low = mid + 1;
+            else 
+                high = mid-1;
         }
-        if (GuessGame.guess(g) == 0) 
-            return g;
-        else { //the guess is too small or too big
-            g = (lower + upper)/2;
-            switch(GuessGame.guess(g)){
-                case 0: return g;
-                case 1: lower = (upper + lower)/2 + 1; return guessNumber(g);
-                case -1: upper = (upper + lower)/2; return guessNumber(g);
-            }
-        }  
         return -1;
     }
 }
