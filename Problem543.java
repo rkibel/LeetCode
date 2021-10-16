@@ -17,6 +17,7 @@ public class Problem543 {
  *     }
  * }
  */
+    /*
     int counter = 0;
     public int diameterOfBinaryTree(TreeNode root) {
         height (root);
@@ -25,10 +26,10 @@ public class Problem543 {
     public int height (TreeNode root){
         if (root == null)
             return 0;
-        int l = height (root.left);
+        int l = height(root.left);
         int r = height(root.right);
         counter = Math.max(counter, l + r);
         return Math.max(r, l) + 1;
     }
+    */
 }
-
