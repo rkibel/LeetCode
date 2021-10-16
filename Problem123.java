@@ -1,32 +1,19 @@
 public class Problem123 {
-    int profit;
     public int maxProfit(int[] prices) {
-        profit = maxTransaction(prices, 0, prices.length-1);
-        int index1 = 0;
-        int index2 = 2;
-        //index2 must be >2 away from index1
-        if (prices.length > 4){
-            for (int i = index1; i <= prices.length - 5; i++){
-                //for (int j = i + 2; )
-                
-                
-                
-            }
-            
-            
-            
-            
-            
-        }
-        return profit;
-    }
-    public int maxTransaction(int[] prices, int index1, int index2){
-        int m = 0;
-        for (int i = index1; i < index2; i++){
-            for (int j = i; j < index2 + 1; j++){
-                m = Math.max(m, prices[j] - prices[i]);
+        int n = prices.length;
+        int [][] arr = new int[3][n]; //constructs a 3 by n array
+        
+        for (int i = 1; i <= 2; i++) { //cycles for the last two rows
+            int mDiff = arr[i-1][0] - prices[0]; //mDiff is set to negative first value
+            for (int j = 1; j < n; j++){
+                arr[i][j] = Math.max(arr[i][j-1], prices[j] + mDiff); 
+                //a value in the array is set to max of the number behind it, currentprice+maxDiff
+                mDiff = Math.max(mDiff, arr[i-1][j] - prices[j]);
+                //mDiff is set to max of itself, arr value above minus current price
             }
         }
-        return m;
+        //result is in final row last element
+        return arr[2][n-1];
+        
     }
 }
