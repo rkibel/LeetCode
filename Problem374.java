@@ -7,7 +7,7 @@
  * int guess(int num);
  */
 
-public class Problem374 extends GuessGame {
+/*public class Problem374 extends GuessGame {
     public int guessNumber(int n) {
         int high = n;
         int low = 1;
@@ -25,3 +25,4 @@ public class Problem374 extends GuessGame {
     }
 }
 
+*/
