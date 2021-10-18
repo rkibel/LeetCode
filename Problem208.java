@@ -2,7 +2,7 @@ import java.util.*;
 class Problem208 {
     private List<String> trie;
     public Problem208() {
-        trie = new ArrayList();
+        trie = new ArrayList<>();
     }
     
     public void insert(String word) {
