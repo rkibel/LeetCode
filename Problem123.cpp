@@ -21,5 +21,4 @@ class Problem123{
         }
         return *max_element(answer.begin(), answer.end());
     }
-    //hello
 };
