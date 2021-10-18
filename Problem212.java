@@ -1,7 +1,7 @@
 import java.util.*;
 public class Problem212 {
     public List<String> findWords(char[][] board, String[] words) {
-        List<String> output = new ArrayList();
+        List<String> output = new ArrayList<>();
         for (String word: words){
             if (exist(board, word))
                 output.add(word);
