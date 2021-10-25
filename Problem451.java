@@ -18,22 +18,24 @@ public class Problem451 {
                     if (s.charAt(j) == curr)
                         currCount++; 
                 }
-                
                 if (currCount > maxCount){
                     max = curr;
                     maxCount = currCount;
-                }   
+                }
+                currCount = 0;
             }
+            
             System.out.println(max + " " + maxCount);
             for (int x = 0; x < maxCount; x++)
                 output += Character.toString(max);
             maxCount = 0;
             currCount = 0;
-            for (int x = 0; x < s.length(); x++){
+            int n = s.length();
+            for (int x = n-1; x >= 0; x--){
                 if (s.charAt(x) == max){
                     if (x == 0)
                         s = s.substring(1);
-                    else if (x == s.length()-1)
+                    else if (x == n-1)
                         s = s.substring(0, x);
                     else
                         s = s.substring(0, x) + s.substring(x+1);
