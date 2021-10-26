@@ -1,48 +1,56 @@
+import java.util.*;
 public class Problem451 {
-    public static void main (String[]args){
-        String n = "tree";
-        System.out.println(frequencySort(n));
-
-    }
-    public static String frequencySort (String s){
-        int maxCount = 0;
-        char max = ' ';
-        int currCount = 0;
-        char curr = ' ';
+    public String frequencySort(String s) {
+        List<Character> chars = new ArrayList<>();
+        List<Integer> freq = new ArrayList<>();
         String output = "";
-        while (s.length() > 0){
-            for (int i = 0; i < s.length(); i++){
-                curr = s.charAt(i);
-                if (curr != max){
-                    for (int j = 0; j < s.length(); j++){
-                        if (s.charAt(j) == curr)
-                            currCount++; 
-                    }
-                }
-                if (currCount > maxCount){
-                    max = curr;
-                    maxCount = currCount;
-                }
-                currCount = 0;
+        for (int i = 0; i < s.length(); i++){
+            if (!chars.contains(s.charAt(i))){
+                chars.add(s.charAt(i));
+                freq.add(1);
             }
-            
-            System.out.println(max + " " + maxCount);
-            maxCount = 0;
-            currCount = 0;
-            int n = s.length();
-            for (int x = n-1; x >= 0; x--){
-                if (s.charAt(x) == max){
-                    output += Character.toString(max);
-                    if (x == 0)
-                        s = s.substring(1);
-                    else if (x == n-1)
-                        s = s.substring(0, x);
-                    else
-                        s = s.substring(0, x) + s.substring(x+1);
-                }
+            else{
+                int index = chars.indexOf(s.charAt(i));
+                freq.set(index, freq.get(index) + 1);
             }
-            System.out.println(s);
+        }
+        quickSort(freq, chars, 0, freq.size()-1);
+        for (int i = freq.size()-1; i >= 0; i--){
+            for (int j = 0; j < freq.get(i); j++){
+                output += Character.toString(chars.get(i));
+            }
         }
         return output;
+    }
+    static void quickSort (List<Integer>nums, List<Character> freq, int first, int last){
+        int pivot, i, j, temp;
+        char t;
+        if (first < last){
+            pivot = first;
+            i = first;
+            j = last;
+            while (i < j){
+                while (nums.get(pivot) >= nums.get(i) && i < last)
+                    i++;
+                while (nums.get(j) > nums.get(pivot))
+                    j--;
+                if (i < j){
+                    temp = nums.get(i);
+                    t = freq.get(i);
+                    nums.set(i, nums.get(j));
+                    freq.set(i, freq.get(j));
+                    nums.set(j, temp);
+                    freq.set(j, t);
+                }        
+            }
+            temp = nums.get(pivot);
+            t = freq.get(pivot);
+            nums.set(pivot, nums.get(j));
+            freq.set(pivot, freq.get(j));
+            nums.set(j, temp);
+            freq.set(j, t);
+            quickSort(nums, freq, first, j-1);
+            quickSort(nums, freq, j+1, last);
+        }
     }
 }
