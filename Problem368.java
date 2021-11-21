@@ -1,69 +1,32 @@
 import java.util.*;
 
 class Problem368{
-    private List<Integer> maxSubset, currSubset;
-
     public List<Integer> largestDivisibleSubset(int[]nums){
-        maxSubset = new ArrayList<>(); 
-        currSubset = new ArrayList<>();
-        List<Integer> NUMS = new ArrayList<>();
-        for (int i : nums){
-            NUMS.add(i);
-        }
-        findLargestDivisibleSubset(NUMS);
-        return maxSubset;
-    }
+        Arrays.sort(nums);
+        int[]length = new int[nums.length];
+        Arrays.fill(length, 1);
 
-    void findLargestDivisibleSubset(List<Integer> x){
-        if (x.size() == 0){
-            if (currSubset.size() > maxSubset.size()){
-                maxSubset = copy(currSubset);
+        int maxLength = 0;
+        for (int i = nums.length-1; i >= 0; i--){
+            int tempLength = 0;
+            for (int j = i; j < nums.length; j++){
+                if (nums[j] % nums[i] == 0)
+                    tempLength = Math.max(tempLength, length[j]);
             }
-            currSubset.clear();
-            return;
-        }
-        int max = findLargest(x);
-        if (currSubset.size() == 0){
-            currSubset.add(x.get(max));
-            x.remove(max);
-            findLargestDivisibleSubset(x);
-            return;
-        }
-        else{
-            if (belongsInList(currSubset, x.get(max))){
-                currSubset.add(x.get(max));
-            }
-            x.remove(max);
-            findLargestDivisibleSubset(x);
-            return;
+            length[i] += tempLength;
+            maxLength = Math.max(maxLength, length[i]);
         }
 
-    }
-
-    public int findLargest(List<Integer> nums){
-        int max = nums.get(0);
-        int index = 0;
-        for (int i = 0; i < nums.size(); i++){
-            if (nums.get(i) > max){
-                max = nums.get(i);
-                index = i;
+        List<Integer>output = new ArrayList<>();
+        for (int i = 0; i < nums.length; i++){
+            if (length[i] == maxLength){
+                if (output.size() == 0 || nums[i] % output.get(output.size()-1) == 0)
+                    output.add(nums[i]);
+                else
+                    continue;
+                maxLength--;
             }
         }
-        return index;
-    }
-    public boolean belongsInList(List<Integer> curr, int val){
-        for (int i : curr){
-            if (val % i != 0 && i % val != 0)
-                return false;
-        }
-        return true;
-    }
-
-    public List<Integer> copy(List<Integer> x){
-        List<Integer> y = new ArrayList<>();
-        for (int i = 0; i < y.size(); i++){
-            x.add(y.get(i));
-        }
-        return y;
+        return output;
     }
 }
