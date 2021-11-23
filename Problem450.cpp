@@ -1,3 +1,6 @@
+#include <iostream>
+using namespace std;
+
 struct TreeNode {
     int val;
     TreeNode *left;
@@ -10,28 +13,30 @@ struct TreeNode {
 class Problem450 {
 public:
     TreeNode* deleteNode(TreeNode* root, int key) {
-        TreeNode** result = findTree(root, key);
-        //case 1: there is no node with key
-        if (!result)
-            return root;
-        //case 2: the node with key has no children
-
-        //case 3: the node with key has only right children
-
-        //case 4: the node with key has only left children
-
-        //case 5: the node with key has both children
-        
-    }
-    TreeNode** findTree(TreeNode* tree, int key){
-        if (tree){
-            if (tree->val == key)
-                return &tree;
-            else if (tree->left && findTree(tree->left, key) != nullptr)
-                return findTree(tree->left, key);
-            else if (tree->right && findTree(tree->right, key) != nullptr)
-                return findTree(tree->right, key);
+        TreeNode* iter = root, *par = nullptr;
+        while(iter && iter->val != key){
+            par = iter;
+            if (iter->val < key) iter = iter->right;
+            else iter = iter->left;
         }
-        return nullptr;
+        if (!iter) return root;
+
+        if (!iter->left || !iter->right){
+            auto child = iter->left ? iter->left : iter->right;
+            if (!par) root = child;
+            else if (par->left == iter) par->left = child;
+            else par->right = child;
+        }
+        else{
+            auto curr = iter;
+            par = iter, iter = iter->right;
+            while(iter->left) par = iter, iter = iter->left;
+            curr->val = iter->val;
+
+            if (par->left == iter) par->left = iter->right;
+            else par->right = iter->right;
+        }
+        delete iter;
+        return root;
     }
 };
