@@ -10,11 +10,11 @@ struct ListNode {
 class Problem1290 {
 public:
     int getDecimalValue(ListNode* head) {
-        int res = 0;
+        int c = 0;
         for (ListNode* i = head; i; i = i->next){
-            res <<= 1;
-            if (i->val == 1) res++;
+            c <<= 1;
+            if (i->val == 1) c++;
         }
-        return res;
+        return c;
     }
 };
