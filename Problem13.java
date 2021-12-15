@@ -1,4 +1,4 @@
-class Solution {
+class Problem13 {
     private int num = 0;
     public int romanToInt(String s) {
         if (s.equals(""))
