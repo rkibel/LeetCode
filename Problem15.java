@@ -4,6 +4,27 @@ class Problem15 {
     public List<List<Integer>> threeSum(int[] nums) {
         Arrays.sort(nums);
         List<List<Integer>> res = new ArrayList<List<Integer>>();
+        for (int i = 0; i < nums.length; i++){
+            if (nums[i] > 0) break;
+            int left = i+1, right = nums.length-1;
+            while (left < right){
+                int sum = nums[i] + nums[left] + nums[right];
+                if (sum < 0) left++;
+                else if (sum > 0) right--;
+                else{
+                    res.add(new ArrayList<>(Arrays.asList(nums[i], nums[left], nums[right])));
+                    while(left+1 <= right && nums[left] == nums[left+1]) left++;
+                    left++;
+                    right--;
+                }
+            }
+            while(i+1 < nums.length && nums[i] == nums[i+1]) i++;
+        }
+        return res;
+        /*
+        *** HashMap approach...way too much space and mem
+        Arrays.sort(nums);
+        List<List<Integer>> res = new ArrayList<List<Integer>>();
         Map<Integer, List<List<Integer>>> map = new HashMap<>();
         
         for (int i = 1; i < nums.length; i++){
@@ -27,5 +48,6 @@ class Problem15 {
             }
         }
         return res;
+        */
     }
 }
