@@ -10,19 +10,17 @@ struct ListNode {
 class Problem143 {
 public:
     void reorderList(ListNode* head) {
-        ListNode* temp = head, *last = nullptr, *secondToLast;
+        ListNode *last = nullptr, *secondToLast;
         int len = 0;
-        while(temp){
+        for (ListNode* temp = head; temp; temp = temp->next){
             len++;
             secondToLast = last;
             last = temp;
-            temp = temp->next;
         }
         if (len < 3) return;
-        ListNode* res = head->next;
         secondToLast->next = nullptr;
+        last->next = head->next;
         head->next = last;
-        last->next = res;
-        reorderList(res);
+        reorderList(head->next->next);
     }
 };
