@@ -16,8 +16,7 @@ public:
         if (len == 0) return head->next;
         ListNode* temp = head;
         for (int i = 0; i < len-1; i++) temp = temp->next;
-        if (temp->next && temp->next->next) temp->next = temp->next->next;
-        else if (temp->next) temp->next = nullptr;
+        temp->next = (temp->next->next) ? temp->next->next : nullptr;
         return head;
     }
 };
