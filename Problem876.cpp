@@ -10,13 +10,18 @@ struct ListNode {
 class Problem876 {
 public:
     ListNode* middleNode(ListNode* head) {
-        int len = 0, marker = 0;
+        
+        ListNode *mid = head;
+        for (ListNode* temp = head; temp && temp->next; temp = temp->next->next) mid = mid->next;
+        return mid;
+
+        /*int len = 0, marker = 0;
         for (ListNode* temp = head; temp; temp = temp->next) len++;
-        len = len/2 + 1;
         for (ListNode* temp = head; temp; temp = temp->next){
+            if (marker == len/2) return temp;
             marker++;
-            if (marker == len) return temp;
         }
         return head;
+        */
     }
 };
