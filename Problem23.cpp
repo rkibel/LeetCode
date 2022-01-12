@@ -1,6 +1,5 @@
-#include "vector"
+#include <vector>
 using namespace std;
-
 struct ListNode {
     int val;
     ListNode *next;
@@ -10,28 +9,25 @@ struct ListNode {
 };
 
 class Solution {
-private:
-    ListNode* ans;
 public:
     ListNode* mergeKLists(vector<ListNode*>& lists) {
-        ListNode* curr = ans;
-        while(!lists.empty()){
-            curr = getMin(lists);
-            curr = curr->next;        
+        int minNode = getMinNode(lists);
+        if (minNode == -1) return nullptr;
+        ListNode* merged = lists[minNode], *head = merged;
+        lists[minNode] = lists[minNode]->next;
+        minNode = getMinNode(lists);
+        while(minNode != -1){
+            merged->next = lists[minNode];
+            merged = merged->next;
+            lists[minNode] = lists[minNode]->next;
+            minNode = getMinNode(lists);
         }
-        return ans;
+        return head;
     }
-    ListNode*& getMin(vector<ListNode*>& lists){
-        ListNode*& minNode = lists[0];
-        ListNode*& currNode = lists[0];
-        for (int i = lists.size()-1; i >= 0; i--){
-            if (lists[i] == nullptr) lists.erase(lists.begin() + i);
-            currNode = lists[i];
-            if (currNode->val < minNode->val)
-                minNode = currNode;
-        }
-        ListNode*& m = minNode;
-        m = m->next;
-        return minNode;
+    int getMinNode(vector<ListNode*> nodes){
+        int min = -1;
+        for (int i = 0; i < nodes.size(); i++)
+            if (nodes[i] && (min == -1 || nodes[i]->val < nodes[min]->val)) min = i;
+        return min;
     }
 };
