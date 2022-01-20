@@ -12,7 +12,6 @@ class Problem30 {
                 index = s.indexOf(words[i], index+1);
             }
         }
-        System.out.println(map);
 
         Queue<int[]> q = new LinkedList<>();
         List<Integer> res = new ArrayList<>();
