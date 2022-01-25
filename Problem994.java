@@ -15,7 +15,7 @@ class Pair<T,U> {
         return this.value;
     }
 }
-class Solution {
+class Problem994 {
     private int min = 0;
     public int orangesRotting(int[][] grid) {
         Pair<boolean[][], Integer> pair = rottenBoolArray(grid);
