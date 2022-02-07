@@ -8,6 +8,6 @@ public:
             if (s.find(t[i]) == string::npos) return t[i];
             s.erase(s.begin() + s.find(t[i]));
         }
-        return ' ';
+        return NULL;
     }
 };
