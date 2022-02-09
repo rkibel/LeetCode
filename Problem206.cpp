@@ -10,13 +10,22 @@ struct ListNode {
 class Problem206 {
 public:
     ListNode* reverseList(ListNode* head) {
-        if (!head) return nullptr;
-        ListNode* tail = head, *prev = head->next;
-        tail->next = nullptr;
-        if (!prev) return tail;
-        for (ListNode* temp = prev->next; temp; temp = temp->next)
-            prev->next = tail, tail = prev, prev = temp;
-        prev->next = tail;
+        //iterative approach
+        ListNode* temp = head, *next = nullptr, *prev = nullptr;
+        while(temp){
+            next = temp->next;
+            temp->next = prev;
+            prev = temp;
+            temp = next;
+        }
         return prev;
+        
+        //recursive approach
+        /*if (!head || !head->next) return head;
+        ListNode* newNode = reverseList(head->next);
+        head->next->next = head;
+        head->next = nullptr;
+        return newNode;
+        */
     }
 };
