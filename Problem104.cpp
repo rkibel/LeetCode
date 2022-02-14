@@ -12,16 +12,8 @@ struct TreeNode {
  
 class Solution {
 public:
-    int depth = 0;
     int maxDepth(TreeNode* root) {
-        traverse(root, 0);
-        return depth;
-    }
-    void traverse(TreeNode* root, int d){
-        if (root){
-            depth = max(depth, d+1);
-            traverse(root->right, d+1);
-            traverse(root->left, d+1);
-        }
+        return (root) ? 
+        1 + max(maxDepth(root->left), maxDepth(root->right)) : 0;
     }
 };
