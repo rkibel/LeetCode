@@ -2,7 +2,6 @@
 #include <algorithm>
 #include <queue>
 using namespace std;
-
 class Problem1675 {
 public:
     int minimumDeviation(vector<int>& nums) {
