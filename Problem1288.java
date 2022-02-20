@@ -1,3 +1,4 @@
+import java.util.*;
 class Problem1288 {
     public int removeCoveredIntervals(int[][] inter) {
         Arrays.sort(inter, new Comparator<int[]>() {
