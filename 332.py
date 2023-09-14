@@ -1,3 +1,4 @@
+from collections import defaultdict
 class Solution(object):
     def findItinerary(self, tickets):
         d = defaultdict(list)
