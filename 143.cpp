@@ -1,4 +1,3 @@
-
 struct ListNode {
     int val;
     ListNode *next;
@@ -6,21 +5,35 @@ struct ListNode {
     ListNode(int x) : val(x), next(nullptr) {}
     ListNode(int x, ListNode *next) : val(x), next(next) {}
 };
- 
-class Problem143 {
+
+class Solution {
 public:
-    void reorderList(ListNode* head) {
-        ListNode *last = nullptr, *secondToLast;
-        int len = 0;
-        for (ListNode* temp = head; temp; temp = temp->next){
-            len++;
-            secondToLast = last;
-            last = temp;
+    void reorderList(ListNode* head) {        
+        ListNode* slow = head, *fast = head;
+        while (fast->next && fast->next->next) {
+            fast = fast->next->next;
+            slow = slow->next;
         }
-        if (len < 3) return;
-        secondToLast->next = nullptr;
-        last->next = head->next;
-        head->next = last;
-        reorderList(head->next->next);
+        if (fast->next) slow = slow->next;
+        
+        ListNode* pre = nullptr;
+        while (slow) {
+            fast = slow->next;
+            slow->next = pre;
+            pre = slow;
+            slow = fast;
+        }
+        slow = pre;
+
+        while(head && slow) {
+            fast = head->next;
+            pre = slow->next;
+            head->next = slow;
+            slow->next = fast;
+            head = fast;
+            slow = pre;
+        }
+        if (head && head->next) head->next->next = nullptr;
+
     }
 };
